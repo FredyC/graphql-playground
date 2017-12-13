@@ -1,20 +1,18 @@
-import React from 'react'
-import { compose } from 'recompose'
-import { buildQuery } from '../withApollo'
+import React from "react";
+import { compose } from "recompose";
+import { buildQuery } from "../withApollo";
+import withCurrentShop from '../withCurrentShop'
 
-const ShopTitle = ({ data: { currentShop }}) => (
-  <h2>
-    {currentShop.name}
-  </h2>
-)
+const ShopTitle = ({ data: { shop } }) => <h2>{shop.name}</h2>;
 
-const decorate = buildQuery(`
-  query ShopTitle {
-    currentShop {
+const decorate = compose(
+  withCurrentShop,
+  buildQuery(`query ShopTitle($shopId: ID!) {
+    shop(id: $shopId) {
       id
       name
     }
-  }
-`)
+  }`
+));
 
-export default decorate(ShopTitle)
+export default decorate(ShopTitle);

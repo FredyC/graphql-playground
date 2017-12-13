@@ -1,7 +1,8 @@
-import React from 'react'
-import { compose } from 'recompose'
-import { buildQuery } from '../withApollo'
-import { Table } from 'reactstrap'
+import React from "react";
+import { Table } from "reactstrap";
+import { compose } from "recompose";
+import { buildQuery } from "../withApollo";
+import withCurrentShop from "../withCurrentShop";
 
 const renderProduct = ({ id, name, price }) => (
   <tr key={id}>
@@ -9,11 +10,11 @@ const renderProduct = ({ id, name, price }) => (
     <td>{name}</td>
     <td>{price}</td>
   </tr>
-)
+);
 
-const ShopProducts = ({ data: { currentShop }}) => (
+const ShopProducts = ({ data: { shop } }) => (
   <div>
-    <h4>Our products</h4>
+    <b>Our products</b>
     <Table striped>
       <thead>
         <tr>
@@ -22,14 +23,15 @@ const ShopProducts = ({ data: { currentShop }}) => (
           <th>Price</th>
         </tr>
       </thead>
-      <tbody>{currentShop.products.map(renderProduct)}</tbody>
+      <tbody>{shop.products.map(renderProduct)}</tbody>
     </Table>
   </div>
-)
+);
 
-const decorate = buildQuery(`
-  query ShopProducts {
-    currentShop {
+const decorate = compose(
+  withCurrentShop,
+  buildQuery(`query ShopContact($shopId: ID!) {
+    shop(id: $shopId) {
       id
       products {
         id
@@ -39,5 +41,6 @@ const decorate = buildQuery(`
     }
   }
 `)
+);
 
-export default decorate(ShopProducts)
+export default decorate(ShopProducts);

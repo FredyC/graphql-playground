@@ -11,15 +11,15 @@ const ShopSelection = ({ data: { currentShop, shops }, selectShop, isOpen, toggl
     <Modal isOpen={isOpen} onClick={toggleOpen}>
       <ModalHeader>Pick different branch</ModalHeader>
       <ModalBody>
-      <ButtonGroup size="sm" vertical>
-        {shops.map(({ id, name, city }) => (
-          <ShopSelectButton
-            key={id}
-            id={id}
-            isActive={currentShop.id === id}
-          >{`${name} (${city})`}</ShopSelectButton>
-        ))}
-      </ButtonGroup>
+        <ButtonGroup size="sm" vertical>
+          {shops.map(({ id, name, city }) => (
+            <ShopSelectButton
+              key={id}
+              id={id}
+              isActive={currentShop.id === id}
+            >{`${name} (${city})`}</ShopSelectButton>
+          ))}
+        </ButtonGroup>
       </ModalBody>
     </Modal>
   </div>

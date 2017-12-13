@@ -1,26 +1,22 @@
 import React from "react";
 import { Button } from "reactstrap";
-import { buildMutation } from "../withApollo";
+import { inject, observer } from "mobx-react";
+import { compose, withHandlers } from "recompose";
 
-const ShopSelectButton = ({ selectShop, id, isActive, children }) => (
+const ShopSelectButton = ({ onSelectShop, id, store, children }) => (
   <div>
-    <Button
-      color="primary"
-      active={isActive}
-      outline
-      onClick={() => selectShop({ id })}
-    >{children}</Button>
+    <Button color="primary" active={store.shopId === id} outline onClick={onSelectShop}>
+      {children}
+    </Button>
   </div>
 );
 
-const decorate = buildMutation('selectShop', `
-  mutation SelectShop($id: ID!) {
-    selectShop(id: $id) {
-      id
-    }
-  }
-`, {
-  refetchQueries: ['ShopTitle', 'ShopContact', 'ShopProducts', 'ShopSelection']
-})
+const decorate = compose(
+  inject("store"),
+  withHandlers({
+    onSelectShop: ({ id, store }) => () => store.selectShop(id)
+  }),
+  observer
+);
 
 export default decorate(ShopSelectButton);
