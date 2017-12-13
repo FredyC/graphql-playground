@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "reactstrap";
-import { buildMutation } from "./withApollo";
+import { buildMutation } from "../withApollo";
 
 const ShopSelectButton = ({ selectShop, id, isActive, children }) => (
   <div>
@@ -20,7 +20,7 @@ const decorate = buildMutation('selectShop', `
     }
   }
 `, {
-  // refetchQueries: ['ShopTitle', 'ShopContact', 'ShopProducts', 'ShopSelection']
+  refetchQueries: ['ShopTitle', 'ShopContact', 'ShopProducts', 'ShopSelection']
 })
 
 export default decorate(ShopSelectButton);

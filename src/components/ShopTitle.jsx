@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose } from 'recompose'
-import { buildQuery } from './withApollo'
+import { buildQuery } from '../withApollo'
 
 const ShopTitle = ({ data: { currentShop }}) => (
   <h2>

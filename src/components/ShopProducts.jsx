@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose } from 'recompose'
-import { buildQuery } from './withApollo'
+import { buildQuery } from '../withApollo'
 import { Table } from 'reactstrap'
 
 const renderProduct = ({ id, name, price }) => (
@@ -13,12 +13,14 @@ const renderProduct = ({ id, name, price }) => (
 
 const ShopProducts = ({ data: { currentShop }}) => (
   <div>
-    <b>Our products</b>
+    <h4>Our products</h4>
     <Table striped>
       <thead>
-        <th>#</th>
-        <td>Name</td>
-        <td>Price</td>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
       </thead>
       <tbody>{currentShop.products.map(renderProduct)}</tbody>
     </Table>
